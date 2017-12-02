@@ -55,56 +55,75 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 In the third cell the camera calibration is done for all chessboard images in the folder camera_cal.
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. 3 of the 20 used chessboard images could not be used for calibration since the chessboard corners could not be found (images calibration1.jpg / calibration4.jpg and calibration5.jpg)
+I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. 3 of the 20 used chessboard images could not be used for calibration since the number of expected chessboard corners could not be found (images calibration1.jpg / calibration4.jpg and calibration5.jpg)
 
-
-
-I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
-
-![alt text][image1]
-
+The conversion matrix for distotion correction is:
+[[  1.15396093e+03   0.00000000e+00   6.69705359e+02]
+ [  0.00000000e+00   1.14802495e+03   3.85656232e+02]
+ [  0.00000000e+00   0.00000000e+00   1.00000000e+00]]
+ 
+ 
 ### Pipeline (single images)
+
+The following steps are performed on all images in the folder  [folder] (https://github.com/dagrubi/Term1_P4/blob/master/test_images). First every step is explained step by step and at the end the whole pipeline on all images is described.
+
 
 #### 1. Provide an example of a distortion-corrected image.
 
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
+I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+ <br />
+ ![Distortion Correction][image2].
+ You can see the effect especially on the tree on the left and right side of the image.
+ 
+ The code for disstortion correction on a test image is in cell 4 and in cell 5 of the notebook disstortion correction is applied on all pics in the [folder] (https://github.com/dagrubi/Term1_P4/blob/master/test_images).
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+Cell 6 contains some methods for color gradients (source classroom)
+- abs_sobel_thres: caculation of sobel operation
+- mag_thres: threshold of sobel operator in x / y- direction (magnitude of gradient)
+- dis_threshold: threshold direction of gradient (arctan of x-sobel and y-sobel operator)
+- hls_selct: threshold for s-channel after conversion to hls color space
+- combined_binary: combination of x-threshold and threshold of s-channel
+- region of interest: application of an image mask
 
-![alt text][image3]
+For final image i used the cominded binary method. The code on all test images can be found in cell 7 of the Notebook. I used a mask in order to apply the filter only on the relevant part of the image, where usually the lanes can be found.
+Here are two examples:
+ <br />
+ ![Binary Image Example 1][image3]
+ <br />
+![Binary Image Example 2][image4]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+Some used methods for perspective transform can be found in cell 8.
+- warp_all: do the wrap for an original image with following steps: 1) undistortion of the image (cv2.undistort(); 2)conversion to grayscale 3)get tranformation matrix (cv2.getPerspectiveTransform()); 4 warp picture (cv2.warpPerspective())
+- warp: used for binary images (already undistorted) -> only getPerspectiveTransform und warpPerspective necessary
 
-```python
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-```
+In cell 9 you can find the code in order to wrap an image und to select the source (`scr`) and destination (`dst`) points.
+I used an image with straight lines (straight_lines1.jpg). As source points i selected 4 points on the lines (manually). After the perspective transformation the straight lines have to be parallel. In order to achieve this i selected the destination points, so that the lines are parallel.
 
 This resulted in the following source and destination points:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 200, 720      | 100, 720      | 
+| 1100, 720     | 900, 720      |
+| 650, 430      | 1100, 1       |
+| 625, 430      | 300, 1        |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+The result of the perspective transformation of the test image with straight lines can be found in 
+ <br />
+![Perspective Transformation][image5]
+The lines appear parallel.
 
-![alt text][image4]
+in cell 10 i applied the perspective transform on all test images. The original image, the warped original imagae and the warped combined binary image is shown. 
+
+ <br />
+![Wrapped test image 1][image6]
+
+ <br />
+![Wrapped test image 2][image7]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
