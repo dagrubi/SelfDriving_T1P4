@@ -127,19 +127,24 @@ in cell 10 i applied the perspective transform on all test images. The original 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+In cell 11 is a method (find_lines_1() to indentify lane lines pixels. Ini order to find the lanes the peaks in a histrogramm are used as possible lane points. In order to find the peaks the sliding window method (from classroom secton 33) is applied. 10 windows are used. A second order polynom is used to find the left and right lane (np.polyfit). 
 
-![alt text][image5]
+cell 12 applies the method on all test images. After undistortion, combined binary, wraping transformation the method find_lines_1() is applied. The result is shown exemplary on two test images
+
+ <br />
+![find lines test image 1][image8]
+
+ <br />
+![find lines test image 2][image9]
+
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
-![alt text][image6]
 
 ---
 
