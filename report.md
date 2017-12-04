@@ -32,7 +32,8 @@ The goals / steps of this project are the following:
 [image9]: ./pics_report/res_2.png 
 [image10]: ./pics_report/res_3.png 
 [image11]: ./pics_report/res_4.png 
-[image12]: ./pics_report/res_5.png 
+[image12]: ./pics_report/res_5.png
+[image13]: ./pics_report/res_6.png 
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -107,10 +108,10 @@ This resulted in the following source and destination points:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 200, 720      | 100, 720      | 
-| 1100, 720     | 900, 720      |
-| 650, 430      | 1100, 1       |
-| 625, 430      | 300, 1        |
+| 230, 700      | 300, 720      | 
+| 600, 445      | 300, 720      |
+| 680, 445      | 1000, 1       |
+| 1080, 700     |1000, 1        |
 
 The result of the perspective transformation of the test image with straight lines can be found in 
  <br />
@@ -127,7 +128,7 @@ in cell 10 i applied the perspective transform on all test images. The original 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-In cell 11 is a method (find_lines_1() to indentify lane lines pixels. Ini order to find the lanes the peaks in a histrogramm are used as possible lane points. In order to find the peaks the sliding window method (from classroom secton 33) is applied. 10 windows are used. A second order polynom is used to find the left and right lane (np.polyfit). 
+In cell 11 is a method (find_lines_1() to indentify lane lines pixels. The x & y coordinates of non zeros pixels are found. In order to find the peaks the sliding window method (from classroom secton 33) is applied. 10 windows are used. A second order polynom is used to find the left and right lane (np.polyfit). 
 
 cell 12 applies the method on all test images. After undistortion, combined binary, wraping transformation the method find_lines_1() is applied. The result is shown exemplary on two test images
 
@@ -140,10 +141,14 @@ cell 12 applies the method on all test images. After undistortion, combined bina
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
+cell 13 describes the algorithm to calcualte the curvature (calculate_curvature)
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+Following steps are necessary:
+- Paint the lane area
+- Perform an inverse perspective transform with Matrix M_inv
+- Combination of precessed image with the original image
 
 
 ---
