@@ -42,7 +42,7 @@ The goals / steps of this project are the following:
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
-All code is implemented in one IPython notebook, and here is a link to my [project code](https://github.com/dagrubi/Term1_P4/blob/master/P4.ipynb)
+All code is implemented in one IPython notebook, and here is a link to my [project code](https://github.com/dagrubi/Term1_P4/blob/master/p4.ipynb)
 
 ### Writeup / README
 
