@@ -78,7 +78,7 @@ I applied this distortion correction to the test image using the `cv2.undistort(
  ![Distortion Correction][image2].
  You can see the effect especially on the tree on the left and right side of the image.
  
- The code for disstortion correction on a test image is in cell 4 and in cell 5 of the notebook disstortion correction is applied on all pics in the [folder] (https://github.com/dagrubi/Term1_P4/blob/master/test_images).
+ The code for disstortion correction on a test image is in cell 4 and in cell 5 of the notebook disstortion correction is applied on all pics in the [folder] (https://github.com/dagrubi/Term1_P4/tree/master/test_images).
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
@@ -125,10 +125,10 @@ The lines appear parallel.
 
 in cell 10 i applied the perspective transform on all test images. The original image, the warped original imagae and the warped combined binary image is shown. 
 
- <br />
+....
 ![Wrapped test image 1][image6]
 
- <br />
+....
 ![Wrapped test image 2][image7]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
@@ -137,10 +137,10 @@ In cell 11 is a method (find_lines_1() to indentify lane lines pixels. By calcul
 
 cell 12 applies the method on all test images. After undistortion, combined binary, wraping transformation the method find_lines_1() is applied. The result is shown exemplary on two test images
 
- <br />
+....
 ![find lines test image 1][image8]
 
- <br />
+....
 ![find lines test image 2][image9]
 
 
@@ -169,22 +169,18 @@ Cell 15 provides the pipeline for the test images. Following methods are used in
 The result on the 6 testimages can be seen here:
  <br />
 ![result test image 1][image10]
-
- <br />
+...
 ![result test image 2][image11]
-
- <br />
+....
 ![result test image 3][image12]
-
- <br />
+....
 ![result test image 4][image13]
-
- <br />
+....
 ![result test image 5][image14]
-
- <br />
+....
 ![result test image 6][image15]
 
+The results can be found in the folder [folder] (https://github.com/dagrubi/Term1_P4/tree/master/output_images).
 
 ---
 
